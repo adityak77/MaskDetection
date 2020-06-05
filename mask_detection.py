@@ -3,10 +3,18 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
 import numpy as np
 import cv2
+import argparse
 
-FACE_DETECTOR_PATH = "face_detector/"
-MODEL_PATH = "training_results/model75-25_Adam_balanced_dataset.h5"
-EXAMPLE_PATH = "examples/example_03.jpg"
+
+ap = argparse.ArgumentParser()
+ap.add_argument('-f', '--face', default='face_detector/', help='path to directory with face detector model')
+ap.add_argument('-m', '--model', default='training_results/model75-25_Adam_balanced_dataset.h5', help='path to file with mask detector model')
+ap.add_argument('-i', '--image', default='examples/example_03.jpg', help='path to file with image')
+args = vars(ap.parse_args())
+
+FACE_DETECTOR_PATH = args['face']
+MODEL_PATH = args['model']
+EXAMPLE_PATH = args['image']
 
 def detectMask(path_to_face_detector_model, path_to_mask_model, path_to_image):
     print("Loading models...")
